@@ -28,7 +28,7 @@ public class Gwiazda
     public String getRektascenjsa() {
         return rektascenjsa;
     }
-    public int getDeklinacja() {
+    public String getDeklinacja() {
         return deklinacja;
     }
     public int getObserwowanaWielkoscGwiazdy() {
@@ -48,6 +48,7 @@ public class Gwiazda
     }
 
     //Setters
+    //TODO: dodać wyjątki, dodać erory dla usera
     public void setNazwa(String nazwa)
     {
         //if (nazwa.charAt())
@@ -92,5 +93,34 @@ public class Gwiazda
     public void setMasa(int masa)
     {
         this.masa=masa;
+    }
+
+    //konstruktor
+    //TODO: uzupełnić kolejne zmienne
+    public Gwiazda(String nazwa){   //Maciej Gajda
+        this.nazwa = nazwa;
+    }
+    public boolean CzyPoprawnaNazwa(String nazwa) //Jakub Czekajski
+    {
+        StringBuilder tabLiter= new StringBuilder();
+        StringBuilder tabLiczb= new StringBuilder();
+        for (int i = 0; i < nazwa.length(); i++)
+        {
+            if(Character.isDigit(nazwa.charAt(i)))
+            {
+                tabLiter.append(nazwa.charAt(i));
+            }
+            else if (Character.isUpperCase(nazwa.charAt(i))&&Character.isLetter(nazwa.charAt(i)))
+            {
+                tabLiczb.append(nazwa.charAt(i));
+            }
+        }
+        return tabLiter.length() == 3 && tabLiczb.length() == 4;
+    }
+    //metoda wyświetlająca
+    //TODO: uporządkować sety
+    public void Poka() {
+        setNazwa(nazwa);
+        System.out.print(getNazwa());
     }
 }
