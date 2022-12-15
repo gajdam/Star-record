@@ -51,8 +51,12 @@ public class Gwiazda
     //TODO: dodać wyjątki, dodać erory dla usera
     public void setNazwa(String nazwa)
     {
-        //if (nazwa.charAt())
-        this.nazwa=nazwa;
+        if (nazwa.length()!=7&&!CzyPoprawnaNazwa(nazwa))
+        {
+            throw new IllegalArgumentException();
+        }
+        else
+            this.nazwa=nazwa;
     }
     public void setNazwaKatalogowa(String nazwaKatalogowa)
     {
