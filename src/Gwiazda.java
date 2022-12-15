@@ -5,10 +5,10 @@ public class Gwiazda
     String gwiazdozbior;
     String polkula;
     String rektascenjsa;
-    int deklinacja;
-    int obserwowanaWielkoscGwiazdy;
-    int absolutnaWielkoscGwiazdy;
-    int lataSwietlne;
+    String deklinacja;
+    double obserwowanaWielkoscGwiazdy;
+    double absolutnaWielkoscGwiazdy;
+    double lataSwietlne;
     int temperatura;
     int masa;
 
@@ -31,13 +31,13 @@ public class Gwiazda
     public String getDeklinacja() {
         return deklinacja;
     }
-    public int getObserwowanaWielkoscGwiazdy() {
+    public double getObserwowanaWielkoscGwiazdy() {
         return obserwowanaWielkoscGwiazdy;
     }
-    public int getAbsolutnaWielkoscGwiazdy() {
+    public double getAbsolutnaWielkoscGwiazdy() {
         return absolutnaWielkoscGwiazdy;
     }
-    public int getLataSwietlne() {
+    public double getLataSwietlne() {
         return lataSwietlne;
     }
     public int getTemperatura() {
@@ -70,7 +70,7 @@ public class Gwiazda
     {
         this.rektascenjsa=rektascenjsa;
     }
-    public void setDeklinacja(int deklinacja)
+    public void setDeklinacja(String deklinacja)
     {
         this.deklinacja=deklinacja;
     }
@@ -78,11 +78,11 @@ public class Gwiazda
     {
         this.obserwowanaWielkoscGwiazdy=obserwowanaWielkoscGwiazdy;
     }
-    public void setAbsolutnaWielkoscGwiazdy(int absolutnaWielkoscGwiazdy)
+    public void setAbsolutnaWielkoscGwiazdy(double absolutnaWielkoscGwiazdy)
     {
         this.absolutnaWielkoscGwiazdy=absolutnaWielkoscGwiazdy;
     }
-    public void setLataSwietlne(int lataSwietlne)
+    public void setLataSwietlne(double lataSwietlne)
     {
         this.lataSwietlne=lataSwietlne;
     }
@@ -116,6 +116,11 @@ public class Gwiazda
             }
         }
         return tabLiter.length() == 3 && tabLiczb.length() == 4;
+    }
+    public double ObliczAbsWielGwi() //Jakub Czekajski
+    {
+        double r = lataSwietlne*0.3066; //parseki
+        return obserwowanaWielkoscGwiazdy-5*Math.log10(r)+5;
     }
     //metoda wyświetlająca
     //TODO: uporządkować sety

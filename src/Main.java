@@ -4,6 +4,6 @@ public class Main
     {
         System.out.println("Hello world!");
         Gwiazda g1 = new Gwiazda("AA3VDF2");
-        //g1.Poka();
+        g1.Poka();
     }
 }
