@@ -11,6 +11,10 @@ public class Gwiazda
     double lataSwietlne;
     int temperatura;
     int masa;
+    int stopnie;
+    int godziny;
+    int minuty;
+    int sekundy;
 
     //Getters
     public String getNazwa() {
@@ -46,12 +50,24 @@ public class Gwiazda
     public int getMasa() {
         return masa;
     }
+    public int getStopnie() {
+        return stopnie;
+    }
+    public int getGodziny() {
+        return godziny;
+    }
+    public int getMinuty() {
+        return minuty;
+    }
+    public int getSekundy() {
+        return sekundy;
+    }
 
     //Setters
     //TODO: dodać wyjątki, dodać erory dla usera
     public void setNazwa(String nazwa)
     {
-        if (nazwa.length()!=7&&!CzyPoprawnaNazwa(nazwa))
+        if (nazwa.length() != 7&& !CzyPoprawnaNazwa(nazwa))
         {
             throw new IllegalArgumentException();
         }
@@ -98,6 +114,40 @@ public class Gwiazda
     {
         this.masa=masa;
     }
+    public void setStopnie(int stopnie) {
+        if (stopnie >= -90 && stopnie <= 90) {
+            this.stopnie = stopnie;
+        }
+        else {
+            throw new IllegalArgumentException();
+        }
+    }
+    public void setGodziny(int godziny) {
+        if (godziny >= 0 && godziny <= 24) {
+            this.godziny = godziny;
+        }
+        else {
+            throw new IllegalArgumentException();
+        }
+    }
+    public void setMinuty(int minuty) {
+        if (minuty >= 0 && minuty <= 60) {
+            this.minuty = minuty;
+        }
+        else {
+            throw new IllegalArgumentException();
+        }
+    }
+    public void setSekundy(int sekundy) {
+        if (sekundy >= 0 && sekundy <= 60) {
+            this.sekundy = sekundy;
+        }
+        else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    //TODO: Podawane przez usera: Nazwa, gwiazdozbior, deklinacja(z separatorem), rektastencja, obserwowana wielkość gwiazdowa, lata świetlne, półkula, temperatura, masa
 
     //konstruktor
     //TODO: uzupełnić kolejne zmienne
@@ -125,6 +175,23 @@ public class Gwiazda
     {
         double r = lataSwietlne*0.3066; //parseki
         return obserwowanaWielkoscGwiazdy-5*Math.log10(r)+5;
+    }
+    public String ObliczDeklinacje(int stopnie, int minuty, int sekundy) {  //Maciej Gajda
+        return "" + stopnie + " stopnie " + minuty + " minut " + sekundy + " sekundy";
+    }
+    public String Rektascensja(int godziny, int minuty, int sekundy) {
+        return "" + godziny + " h " + minuty + " m " + sekundy + " s";
+    }
+    public String JakaPolkula(int stopnie) {  //Maciej Gajda
+        if (stopnie > 0) {                    //zakładam, że wartość stopni została sprawdzona w setterze
+            return "PN";
+        }
+        else if (stopnie < 0) {
+            return "PD";
+        }
+        else {
+            return "Równik";
+        }
     }
     //metoda wyświetlająca
     //TODO: uporządkować sety
