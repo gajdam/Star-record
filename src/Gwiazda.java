@@ -1,5 +1,7 @@
 public class Gwiazda
 {
+    public String[] literyGreckie={"Alfa","Beta","Gamma","Delta","Epsilon","Dzeta","Eta","Theta","Jota","Kappa",
+            "Lambda","My","Ny","Ksi","Omikron","Pi","Rho","Sigma","Tau","Ipsylon","Phi","Chi","Psi","Omega"};
     String nazwa;
     String nazwaKatalogowa;
     String gwiazdozbior;
@@ -9,12 +11,6 @@ public class Gwiazda
     double obserwowanaWielkoscGwiazdy;
     double absolutnaWielkoscGwiazdy;
     double lataSwietlne;
-    int temperatura;
-    int masa;
-    int stopnie;
-    int godziny;
-    int minuty;
-    int sekundy;
 
     //Getters
     public String getNazwa() {
@@ -44,10 +40,10 @@ public class Gwiazda
     public double getLataSwietlne() {
         return lataSwietlne;
     }
-    public int getTemperatura() {
+    public String getTemperatura() {
         return temperatura;
     }
-    public int getMasa() {
+    public double getMasa() {
         return masa;
     }
     public int getStopnie() {
@@ -96,7 +92,13 @@ public class Gwiazda
     }
     public void setObserwowanaWielkoscGwiazdy(int obserwowanaWielkoscGwiazdy)
     {
-        this.obserwowanaWielkoscGwiazdy=obserwowanaWielkoscGwiazdy;
+        if (obserwowanaWielkoscGwiazdy<-26.74 || obserwowanaWielkoscGwiazdy>15.00)
+        {
+            throw new IllegalArgumentException();
+        }
+        else {
+            this.obserwowanaWielkoscGwiazdy = obserwowanaWielkoscGwiazdy;
+        }
     }
     public void setAbsolutnaWielkoscGwiazdy(double absolutnaWielkoscGwiazdy)
     {
@@ -104,15 +106,36 @@ public class Gwiazda
     }
     public void setLataSwietlne(double lataSwietlne)
     {
-        this.lataSwietlne=lataSwietlne;
+        if (lataSwietlne<=0)
+        {
+            throw new IllegalArgumentException();
+        }
+        else
+        {
+            this.lataSwietlne=lataSwietlne;
+        }
     }
-    public void setTemperatura(int temperatura)
+    public void setTemperatura(String temperatura)
     {
-        this.temperatura=temperatura;
+        if (Double.parseDouble(temperatura)<2000)
+        {
+            throw new IllegalArgumentException();
+        }
+        else {
+            this.temperatura = temperatura;
+        }
     }
-    public void setMasa(int masa)
+    public void setMasa(double masa)
     {
-        this.masa=masa;
+        if (masa<=0.1||masa>50)
+        {
+            throw new IllegalArgumentException();
+        }
+        else
+        {
+            this.masa=masa;
+        }
+
     }
     public void setStopnie(int stopnie) {
         if (stopnie >= -90 && stopnie <= 90) {
@@ -199,4 +222,5 @@ public class Gwiazda
         setNazwa(nazwa);
         System.out.print(getNazwa());
     }
+
 }
