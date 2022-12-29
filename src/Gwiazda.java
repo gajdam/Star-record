@@ -8,9 +8,16 @@ public class Gwiazda
     String polkula;
     String rektascenjsa;
     String deklinacja;
+    String temperatura;
+    double masa;
+    int stopnie;
+    int godziny;
+    int minuty;
+    int sekundy;
     double obserwowanaWielkoscGwiazdy;
     double absolutnaWielkoscGwiazdy;
     double lataSwietlne;
+
 
     //Getters
     public String getNazwa() {
@@ -202,7 +209,7 @@ public class Gwiazda
     public String ObliczDeklinacje(int stopnie, int minuty, int sekundy) {  //Maciej Gajda
         return "" + stopnie + " stopnie " + minuty + " minut " + sekundy + " sekundy";
     }
-    public String Rektascensja(int godziny, int minuty, int sekundy) {
+    public String Rektascensja(int godziny, int minuty, int sekundy) {     //Maciej Gajda
         return "" + godziny + " h " + minuty + " m " + sekundy + " s";
     }
     public String JakaPolkula(int stopnie) {  //Maciej Gajda
