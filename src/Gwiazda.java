@@ -10,10 +10,7 @@ public class Gwiazda
     String deklinacja;
     String temperatura;
     double masa;
-    int stopnie;
-    int godziny;
-    int minuty;
-    int sekundy;
+
     double obserwowanaWielkoscGwiazdy;
     double absolutnaWielkoscGwiazdy;
     double lataSwietlne;
@@ -53,18 +50,7 @@ public class Gwiazda
     public double getMasa() {
         return masa;
     }
-    public int getStopnie() {
-        return stopnie;
-    }
-    public int getGodziny() {
-        return godziny;
-    }
-    public int getMinuty() {
-        return minuty;
-    }
-    public int getSekundy() {
-        return sekundy;
-    }
+
 
     //Setters
     //TODO: dodać wyjątki, dodać erory dla usera
@@ -132,8 +118,7 @@ public class Gwiazda
             this.temperatura = temperatura;
         }
     }
-    public void setMasa(double masa)
-    {
+    public void setMasa(double masa) {
         if (masa<=0.1||masa>50)
         {
             throw new IllegalArgumentException();
@@ -144,45 +129,24 @@ public class Gwiazda
         }
 
     }
-    public void setStopnie(int stopnie) {
-        if (stopnie >= -90 && stopnie <= 90) {
-            this.stopnie = stopnie;
-        }
-        else {
-            throw new IllegalArgumentException();
-        }
-    }
-    public void setGodziny(int godziny) {
-        if (godziny >= 0 && godziny <= 24) {
-            this.godziny = godziny;
-        }
-        else {
-            throw new IllegalArgumentException();
-        }
-    }
-    public void setMinuty(int minuty) {
-        if (minuty >= 0 && minuty <= 60) {
-            this.minuty = minuty;
-        }
-        else {
-            throw new IllegalArgumentException();
-        }
-    }
-    public void setSekundy(int sekundy) {
-        if (sekundy >= 0 && sekundy <= 60) {
-            this.sekundy = sekundy;
-        }
-        else {
-            throw new IllegalArgumentException();
-        }
-    }
 
     //TODO: Podawane przez usera: Nazwa, gwiazdozbior, deklinacja(z separatorem), rektastencja, obserwowana wielkość gwiazdowa, lata świetlne, półkula, temperatura, masa
 
     //konstruktor
     //TODO: uzupełnić kolejne zmienne
-    public Gwiazda(String nazwa){   //Maciej Gajda
+    public Gwiazda(String nazwa, String deklinacja, String rektascenjsa, double obsWielkosc, double odleglosc, String gwiazdozbior, double masa, String temperatura){   //Maciej Gajda
         this.nazwa = nazwa;
+//        this.nazwaKatalogowa =
+        this.deklinacja = deklinacja;
+        this.rektascenjsa = rektascenjsa;
+        this.obserwowanaWielkoscGwiazdy = obsWielkosc;
+        this.lataSwietlne = odleglosc;
+        this.absolutnaWielkoscGwiazdy = ObliczAbsWielGwi();
+        this.polkula = JakaPolkula();
+        this.gwiazdozbior = gwiazdozbior;
+        this.masa = masa;
+        this.temperatura = temperatura;
+
     }
     public boolean CzyPoprawnaNazwa(String nazwa) //Jakub Czekajski
     {
@@ -206,14 +170,21 @@ public class Gwiazda
         double r = lataSwietlne*0.3066; //parseki
         return obserwowanaWielkoscGwiazdy-5*Math.log10(r)+5;
     }
-    public String ObliczDeklinacje(int stopnie, int minuty, int sekundy) {  //Maciej Gajda
-        return "" + stopnie + " stopnie " + minuty + " minut " + sekundy + " sekundy";
+    public static double wydzielStopnie(String deklinacja) {  //razem XD
+        String [] tabWartosci=deklinacja.split(",");
+        try
+        {
+            return Double.parseDouble(tabWartosci[0]);
+        }
+        catch (NumberFormatException e)
+        {
+            return 0.0;
+        }
     }
-    public String Rektascensja(int godziny, int minuty, int sekundy) {     //Maciej Gajda
-        return "" + godziny + " h " + minuty + " m " + sekundy + " s";
-    }
-    public String JakaPolkula(int stopnie) {  //Maciej Gajda
-        if (stopnie > 0) {                    //zakładam, że wartość stopni została sprawdzona w setterze
+    public String JakaPolkula() {  //Maciej Gajda
+
+        double stopnie=wydzielStopnie(deklinacja);
+        if (stopnie > 0) {
             return "PN";
         }
         else if (stopnie < 0) {
@@ -226,8 +197,17 @@ public class Gwiazda
     //metoda wyświetlająca
     //TODO: uporządkować sety
     public void Poka() {
-        setNazwa(nazwa);
-        System.out.print(getNazwa());
+        System.out.println("Nazwa: " + this.nazwa);
+        System.out.println("Nazwa katalogowa: " + this.nazwaKatalogowa);
+        System.out.println("Deklinacja: " + this.deklinacja);
+        System.out.println("Rektascensja: " + this.rektascenjsa);
+        System.out.println("Obserwowana wielkość gwiazdowa: " + this.obserwowanaWielkoscGwiazdy);
+        System.out.println("Absolutna wielkość gwiazdowa: " + ObliczAbsWielGwi());
+        System.out.println("Odległość: " + this.lataSwietlne);
+        System.out.println("Masa: " + this.masa);
+        System.out.println("Polkula: " + JakaPolkula());
+        System.out.println("Gwiazdozbior: " + this.gwiazdozbior);
+        System.out.println("Temperatura: " + this.temperatura);
     }
 
 }
