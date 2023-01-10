@@ -1,4 +1,6 @@
-public class Gwiazda
+import java.io.Serializable;
+
+public class Gwiazda implements Serializable
 {
     public String[] literyGreckie={"Alfa","Beta","Gamma","Delta","Epsilon","Dzeta","Eta","Theta","Jota","Kappa",
             "Lambda","My","Ny","Ksi","Omikron","Pi","Rho","Sigma","Tau","Ipsylon","Phi","Chi","Psi","Omega"};
@@ -129,12 +131,9 @@ public class Gwiazda
         }
 
     }
-
-    //TODO: Podawane przez usera: Nazwa, gwiazdozbior, deklinacja(z separatorem), rektastencja, obserwowana wielkość gwiazdowa, lata świetlne, półkula, temperatura, masa
-
     //konstruktor
-    //TODO: uzupełnić kolejne zmienne
-    public Gwiazda(String nazwa, String deklinacja, String rektascenjsa, double obsWielkosc, double odleglosc, String gwiazdozbior, double masa, String temperatura){   //Maciej Gajda
+    public Gwiazda(String nazwa, String deklinacja, String rektascenjsa, double obsWielkosc,
+                   double odleglosc, String gwiazdozbior, double masa, String temperatura){   //Maciej Gajda
         this.nazwa = nazwa;
 //        this.nazwaKatalogowa =
         this.deklinacja = deklinacja;
@@ -196,7 +195,7 @@ public class Gwiazda
     }
     //metoda wyświetlająca
     //TODO: uporządkować sety
-    public void Poka() {
+    public void Poka() {            //Maciej Gajda
         System.out.println("Nazwa: " + this.nazwa);
         System.out.println("Nazwa katalogowa: " + this.nazwaKatalogowa);
         System.out.println("Deklinacja: " + this.deklinacja);

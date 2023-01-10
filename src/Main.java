@@ -6,6 +6,22 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//TODO
+//ściąganie pliku do listy po uruchomieniu MG
+//metoda wyświetlająca zapytania    ???
+//wyszukiwanie gwiazdozbioru po nazwie  KC
+//wyszukiwanie gwiazd po odległości parseków [przelicz z lat świetlnych na parseki]  KC
+//wyszukiwanie gwiazd mieszczących się w zadanym przedziale temperaturowym  KC
+//wyszukiwanie gwiazd o wielkości gwiazdowej w zadanym przedziale  MG
+//wyszukiwanie gwaizd po pólkuli     MG
+//wyszukiwanie supernowych    MG
+
+
+//TODO ?????
+//lista istniejących gwiazdozbiorów
+//lista istniejących gwiazd (nazw)
+//powyższe listy zapisywać do pliku txt
 public class Main
 {
     public static void main(String[] args) throws IOException {
@@ -24,65 +40,56 @@ public class Main
         wolarz.DodajGwiazde(g5);
 
 
-//        for (Gwiazda g : wolarz.gwiazdozbior) {
-//            g.Poka();
-//            System.out.println();
-//        }
+        for (Gwiazda g : wolarz.gwiazdozbior) {
+            g.Poka();
+            System.out.println();
+        }
+        System.out.println("======================================");
 //        wolarz.UsunGwiazde(g2);
 //        System.out.println("============================================================");
 //        for (Gwiazda g : wolarz.gwiazdozbior) {
 //            g.Poka();
 //            System.out.println();
 //        }
-//
-        FileOutputStream fos = new FileOutputStream("baza.dat");
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        System.out.println("1 - zapis\n2 - odczyt");
+        int action = scan.nextInt();
 
-        oos.writeObject(wolarz);
-        oos.close();
-        fos.close();
+        //zapis do pliku
+        if (action == 1) {
 
+            FileOutputStream fos = new FileOutputStream("baza.dat");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
 
-        try (FileInputStream fis = new FileInputStream("baza.dat");
-             ObjectInputStream ois = new ObjectInputStream(fis)) {
-
-            while (true) {
-                Gwiazdozbior g = (Gwiazdozbior) ois.readObject();
-                for (Gwiazda gwiazda: g.gwiazdozbior) {
-                    gwiazda.Poka();
-                    System.out.println();
-                }
-            }
-        } catch (IOException e) {
-            // Obsługa wyjątku EOFException, który występuje, gdy osiągnięto koniec pliku
-            if (e instanceof java.io.EOFException) {
-                System.out.println("Koniec pliku");
-            } else {
-                e.printStackTrace();
-            }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            oos.writeObject(wolarz);
+            oos.writeObject(ryb);
+            oos.close();
+            fos.close();
         }
 
 
+        //pobieranie z pliku i wyświetlanie
+        else if (action == 2) {
 
-//        for (Gwiazda g : ryb.gwiazdozbior) {
-//            g.Poka();
-//            System.out.println();
-//        }
-//        System.out.println("Co chcesz zrobić?");
-//        System.out.print("1 - dodaj, 2 - wyświetl");
-//        int action = scan.nextInt();
+            try (FileInputStream fis = new FileInputStream("baza.dat");
+                 ObjectInputStream ois = new ObjectInputStream(fis)) {
 
-//        if (action == 1) {
-//            System.out.print("Podaj nazwę gwiazdozbioru");
-//            String nazwa = scan.nextLine();
-//
-//        }
-//        for (int i = 0; i< listaGwiazd.toArray().length; i++) {
-//            listaGwiazd.get(i).Poka();
-//            System.out.println();
-//        }
-        //test
+                while (true) {
+                    Gwiazdozbior g = (Gwiazdozbior) ois.readObject();
+                    for (Gwiazda gwiazda : g.gwiazdozbior) {
+                        gwiazda.Poka();
+                        System.out.println();
+                    }
+                }
+            } catch (IOException e) {
+                // Obsługa wyjątku EOFException, który występuje, gdy osiągnięto koniec pliku
+                if (e instanceof java.io.EOFException) {
+                    System.out.println("Koniec pliku");
+                } else {
+                    e.printStackTrace();
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
