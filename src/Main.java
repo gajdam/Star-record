@@ -24,6 +24,35 @@ import java.util.List;
 //powyższe listy zapisywać do pliku txt
 public class Main
 {
+    public static void Zapis(List<Gwiazdozbior> gz1) throws IOException {
+        FileOutputStream fos = new FileOutputStream("baza.dat");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+        oos.writeObject(gz1);
+        oos.close();
+        fos.close();
+    }
+    public static List<Gwiazdozbior> Odczyt() {
+        List<Gwiazdozbior> pomoc = new ArrayList<>();
+        try (FileInputStream fis = new FileInputStream("baza.dat");
+             ObjectInputStream ois = new ObjectInputStream(fis)) {
+            ArrayList<Gwiazdozbior> tempList = (ArrayList<Gwiazdozbior>)ois.readObject();
+            for(Gwiazdozbior g: tempList) {
+                pomoc.add(g);
+//                System.out.println(g.gwiazdozbior);
+            }
+            return pomoc;
+        } catch (IOException e) {
+            if (e instanceof java.io.EOFException) {
+                System.out.println("Koniec pliku");
+            } else {
+                e.printStackTrace();
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public static void main(String[] args) throws IOException {
         Scanner scan = new Scanner(System.in);
         Gwiazda g1 = new Gwiazda("ABC1234", "-02,12,21", "12,12,21", 2, 1, "wolarza", 1.1,"3000");
@@ -39,57 +68,32 @@ public class Main
         wolarz.DodajGwiazde(g4);
         wolarz.DodajGwiazde(g5);
 
-
-        for (Gwiazda g : wolarz.gwiazdozbior) {
-            g.Poka();
-            System.out.println();
-        }
-        System.out.println("======================================");
-//        wolarz.UsunGwiazde(g2);
-//        System.out.println("============================================================");
-//        for (Gwiazda g : wolarz.gwiazdozbior) {
-//            g.Poka();
-//            System.out.println();
-//        }
-        System.out.println("1 - zapis\n2 - odczyt");
-        int action = scan.nextInt();
-
-        //zapis do pliku
-        if (action == 1) {
-
-            FileOutputStream fos = new FileOutputStream("baza.dat");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-            oos.writeObject(wolarz);
-            oos.writeObject(ryb);
-            oos.close();
-            fos.close();
-        }
-
-
-        //pobieranie z pliku i wyświetlanie
-        else if (action == 2) {
-
-            try (FileInputStream fis = new FileInputStream("baza.dat");
-                 ObjectInputStream ois = new ObjectInputStream(fis)) {
-
-                while (true) {
-                    Gwiazdozbior g = (Gwiazdozbior) ois.readObject();
-                    for (Gwiazda gwiazda : g.gwiazdozbior) {
-                        gwiazda.Poka();
-                        System.out.println();
-                    }
-                }
-            } catch (IOException e) {
-                // Obsługa wyjątku EOFException, który występuje, gdy osiągnięto koniec pliku
-                if (e instanceof java.io.EOFException) {
-                    System.out.println("Koniec pliku");
-                } else {
-                    e.printStackTrace();
-                }
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+        List<Gwiazdozbior> pomoc3 = new ArrayList<>();
+        pomoc3.add(wolarz);
+        pomoc3.add(ryb);
+        Zapis(pomoc3);
+        List<Gwiazdozbior> pomoc2 = Odczyt();
+        assert pomoc2 != null;
+        for (Gwiazdozbior gwiazdozbior: pomoc2) {
+            System.out.println(gwiazdozbior.nazwa);
+            for (Gwiazda gwiazda: gwiazdozbior.gwiazdozbior) {
+                gwiazda.Poka();
+                System.out.println();
             }
         }
+
+
+//            System.out.println("Dodawanie gwiazdy");
+//            String nazwa = scan.nextLine();
+//            String deklinacja = scan.nextLine();
+//            String rekta = scan.nextLine();
+//            double obsWiel = scan.nextDouble();
+//            double lata = scan.nextDouble();
+//            String gwiazdozbior = scan.nextLine();
+//            double masa = scan.nextDouble();
+//            String temperatura = scan.nextLine();
+//            Gwiazda gw = new Gwiazda(nazwa, deklinacja, rekta, obsWiel, lata, gwiazdozbior, masa, temperatura);
+//            wolarz.DodajGwiazde(gw);
     }
+
 }
