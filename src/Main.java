@@ -24,6 +24,7 @@ import java.util.List;
 //powyższe listy zapisywać do pliku txt
 public class Main
 {
+    public static List<Gwiazdozbior> listaOdczyt=Odczyt();
     public static void Zapis(List<Gwiazdozbior> gz1) throws IOException {
         FileOutputStream fos = new FileOutputStream("baza.dat");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -72,9 +73,7 @@ public class Main
         pomoc3.add(wolarz);
         pomoc3.add(ryb);
         Zapis(pomoc3);
-        List<Gwiazdozbior> pomoc2 = Odczyt();
-        assert pomoc2 != null;
-        for (Gwiazdozbior gwiazdozbior: pomoc2) {
+        for (Gwiazdozbior gwiazdozbior: listaOdczyt) {
             System.out.println(gwiazdozbior.nazwa);
             for (Gwiazda gwiazda: gwiazdozbior.gwiazdozbior) {
                 gwiazda.Poka();
