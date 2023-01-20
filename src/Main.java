@@ -8,14 +8,10 @@ import java.util.List;
 
 
 //TODO
-//ściąganie pliku do listy po uruchomieniu MG
 //metoda wyświetlająca zapytania    ???
 //wyszukiwanie gwiazdozbioru po nazwie  KC
 //wyszukiwanie gwiazd po odległości parseków [przelicz z lat świetlnych na parseki]  KC
 //wyszukiwanie gwiazd mieszczących się w zadanym przedziale temperaturowym  KC
-//wyszukiwanie gwiazd o wielkości gwiazdowej w zadanym przedziale  MG
-//wyszukiwanie gwaizd po pólkuli     MG
-//wyszukiwanie supernowych    MG
 
 
 //TODO ?????
@@ -24,7 +20,8 @@ import java.util.List;
 //powyższe listy zapisywać do pliku txt
 public class Main
 {
-    public static List<Gwiazdozbior> listaOdczyt=Odczyt();
+    public static List<Gwiazdozbior> listaOdczyt = Odczyt();
+    public static List<String> gwiazdozbioryNazwy = new ArrayList<>();
     public static void Zapis(List<Gwiazdozbior> gz1) throws IOException {
         FileOutputStream fos = new FileOutputStream("baza.dat");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -54,25 +51,44 @@ public class Main
         }
         return null;
     }
+
+    public static void WyszukajSupernove() {                //Maciej Gajda
+        for (Gwiazdozbior gwiazdozbior: listaOdczyt) {
+            for (Gwiazda gwiazda: gwiazdozbior.gwiazdozbior) {
+                if (gwiazda.getMasa() > 1.44) {
+                    gwiazda.Poka();
+                    System.out.println();
+                }
+            }
+        }
+    }
+
+    public static void WyszukajPolkule(String zapytanie) {      //Maciej Gajda
+        for (Gwiazdozbior gwiazdozbior: listaOdczyt) {
+            for (Gwiazda gwiazda: gwiazdozbior.gwiazdozbior) {
+                if (Objects.equals(gwiazda.getPolkula(), zapytanie)) {
+                    gwiazda.Poka();
+                    System.out.println();
+                }
+            }
+        }
+    }
+
+    public static void WyszukajWielkoscGwiazdowa(double start, double end) {   //Maciej Gajda
+        for (Gwiazdozbior gwiazdozbior: listaOdczyt) {
+            for (Gwiazda gwiazda: gwiazdozbior.gwiazdozbior) {
+                if (gwiazda.getAbsolutnaWielkoscGwiazdy() >= start && gwiazda.getAbsolutnaWielkoscGwiazdy() <= end) {
+                    gwiazda.Poka();
+                    System.out.println();
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         Scanner scan = new Scanner(System.in);
-        Gwiazda g1 = new Gwiazda("ABC1234", "-02,12,21", "12,12,21", 2, 1, "wolarza", 1.1,"3000");
-        Gwiazda g2 = new Gwiazda("DEF4215", "2,22,19", "10,32,19", 5, 7, "wolarza", 1.5,"3500");
-        Gwiazda g3 = new Gwiazda("DEF4215", "2,22,19", "10,32,19", 5, 7, "ryb", 1.5,"3500");
-        Gwiazda g4 = new Gwiazda("DEF4212", "2,22,19", "10,32,19", 5, 7, "wolarza", 1.5,"3500");
-        Gwiazda g5 = new Gwiazda("DEF4211", "2,22,19", "10,32,19", 5, 7, "wolarza", 1.5,"3500");
-        Gwiazdozbior wolarz = new Gwiazdozbior("Wolarz");
-        Gwiazdozbior ryb = new Gwiazdozbior("Ryb");
-        wolarz.DodajGwiazde(g1);
-        wolarz.DodajGwiazde(g2);
-        ryb.DodajGwiazde(g3);
-        wolarz.DodajGwiazde(g4);
-        wolarz.DodajGwiazde(g5);
 
-        List<Gwiazdozbior> pomoc3 = new ArrayList<>();
-        pomoc3.add(wolarz);
-        pomoc3.add(ryb);
-        Zapis(pomoc3);
+        //wyświetlanie wszystkich gwiazd
         for (Gwiazdozbior gwiazdozbior: listaOdczyt) {
             System.out.println(gwiazdozbior.nazwa);
             for (Gwiazda gwiazda: gwiazdozbior.gwiazdozbior) {
@@ -80,6 +96,13 @@ public class Main
                 System.out.println();
             }
         }
+        System.out.println("=============================");
+        for (int i = 0; i < gwiazdozbioryNazwy.size(); i++) {
+            System.out.println(gwiazdozbioryNazwy.get(i));
+        }
+//        WyszukajSupernove();
+//        WyszukajPolkule("PN");
+//        WyszukajWielkoscGwiazdowa(8.50,10);
 
 
 //            System.out.println("Dodawanie gwiazdy");
