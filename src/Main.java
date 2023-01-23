@@ -6,23 +6,10 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
-
-
-//TODO
-//metoda wyświetlająca zapytania    ???
-//wyszukiwanie gwiazdozbioru po nazwie  KC
-//wyszukiwanie gwiazd po odległości parseków [przelicz z lat świetlnych na parseki]  KC
-//wyszukiwanie gwiazd mieszczących się w zadanym przedziale temperaturowym  KC
-
-
-//TODO ?????
-//lista istniejących gwiazdozbiorów
-//lista istniejących gwiazd (nazw)
-//powyższe listy zapisywać do pliku txt
 public class Main
 {
     public static List<Gwiazdozbior> listaOdczyt = Odczyt();
-    public static List<String> gwiazdozbioryNazwy = new ArrayList<>();
+//    public static List<Gwiazdozbior> listaOdczyt = new ArrayList<>();
     public static void Zapis(List<Gwiazdozbior> gz1) throws IOException {
         FileOutputStream fos = new FileOutputStream("baza.dat");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -50,7 +37,7 @@ public class Main
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
+        return pomoc;
     }
 
     public static void WyszukajSupernove() {                //Maciej Gajda
@@ -97,9 +84,10 @@ public class Main
             }
         }
     }
+
     static void WyszukajParseki (double parsek)         //Jakub Czekajski
     {
-        double lataSwietlne=parsek*0.30661012859534;
+        double lataSwietlne=parsek*0.306;
 //        List <Double> najmniejszaRoznica = new ArrayList<Double>();
 //        List <Double> lataSwietlneLista=new ArrayList<Double>();
         double minRoznica = Double.MAX_VALUE;
@@ -125,6 +113,7 @@ public class Main
                 }
             }
         }
+
         if (najblizszaGwiazda != null) {
             System.out.println("\033[31mNie znaleziono gwiazdy w takiej odległości\033[0m, najbliższa gwiazda to: ");
             najblizszaGwiazda.Poka();
@@ -147,9 +136,9 @@ public class Main
 //                }
 //            }
 //        }
-
     }
-    public static void WyszukajTemperature(BigDecimal temp1, BigDecimal temp2)
+
+    public static void WyszukajTemperature(BigDecimal temp1, BigDecimal temp2) //Jakub Czekajski
     {
         int wart1;
         int wart2;
@@ -158,7 +147,7 @@ public class Main
                 BigDecimal wartoscTemp=new BigDecimal(gwiazda.temperatura);
                 wart1=wartoscTemp.compareTo(temp1);
                 wart2=wartoscTemp.compareTo(temp2);
-                if (wart1>0 && wart2<0)
+                if (wart1>=0 && wart2<=0)
                 {
                     gwiazda.Poka();
                     System.out.println();
@@ -167,10 +156,40 @@ public class Main
         }
     }
 
+    public static void WyszukajWGwiazdozbiorze(String inputNazwy)      //Jakub Czekajski
+    {
+        for (Gwiazdozbior gwiazdozbior: listaOdczyt) {
+            for (Gwiazda gwiazda: gwiazdozbior.gwiazdozbior) {
+                if (Objects.equals(gwiazda.getGwiazdozbior(), inputNazwy)) {
+                    gwiazda.Poka();
+                    System.out.println();
+                }
+            }
+        }
+    }
+
+    public static Gwiazdozbior SprawdzObiekt(String nazwa) {
+        for (Gwiazdozbior g : listaOdczyt) {
+            if (Objects.equals(nazwa, g.nazwa))
+                return g;
+        }
+        return null;
+    }
+
+    public static Gwiazda SprawdzGwiazde(String nazwaKat) {
+        for (Gwiazdozbior g : listaOdczyt) {
+            for (Gwiazda gwiazda : g.gwiazdozbior) {
+                System.out.println(nazwaKat);
+                if (Objects.equals(nazwaKat, gwiazda.nazwaKatalogowa)) {
+                    return gwiazda;
+                }
+            }
+        }
+        return null;
+    }
+
     public static void main(String[] args) throws IOException {
         Scanner scan = new Scanner(System.in);
-
-        //wyświetlanie wszystkich gwiazd
         for (Gwiazdozbior gwiazdozbior: listaOdczyt) {
             System.out.println(gwiazdozbior.nazwa);
             for (Gwiazda gwiazda: gwiazdozbior.gwiazdozbior) {
@@ -178,15 +197,121 @@ public class Main
                 System.out.println();
             }
         }
-        System.out.println("=============================");
-        for (int i = 0; i < gwiazdozbioryNazwy.size(); i++) {
-            System.out.println(gwiazdozbioryNazwy.get(i));
+
+        System.out.println("Ewidencja Gwiazd");
+        int wybor = 5;
+        String nazwa, deklinacja, rekta, temperatura, gwiazdozbior;
+        double obsWiel, lata, masa;
+        while (wybor != 0) {
+            System.out.println("1 - Dodaj\n2 - Usuń\n3 - Wyświetl\n0 - wyjdź");
+            wybor = scan.nextInt();
+            if (wybor == 1) {
+                System.out.println("Dodawanie gwiazdy");
+                System.out.println("Podaj nazwę");
+                nazwa = scan.next();
+                System.out.println("Podaj deklinację [xx,yy,zz]");
+                deklinacja = scan.next();
+                System.out.println("Podaj rektascensję [xx,yy,zz]");
+                rekta = scan.next();
+                System.out.println("Podaj obserwowaną wielkość gwiazdową");
+                obsWiel = scan.nextDouble();
+                System.out.println("Podaj odległość w latach świetlnych");
+                lata = scan.nextDouble();
+                System.out.println("Podaj nazwę gwiazdozbioru");
+                gwiazdozbior = scan.next();
+                System.out.println("Podaj masę");
+                masa = scan.nextDouble();
+                System.out.println("Podaj temperaturę");
+                temperatura = scan.next();
+
+                Gwiazda gw = new Gwiazda(nazwa, deklinacja, rekta, obsWiel, lata, gwiazdozbior, masa, temperatura);
+                Gwiazdozbior gwz = SprawdzObiekt(gwiazdozbior);
+                if (gwz == null) {
+                    gwz = new Gwiazdozbior((gwiazdozbior));
+                    listaOdczyt.add(gwz);
+                }
+                gwz.DodajGwiazde(gw);
+//                listaOdczyt.add(gwz);
+            }
+            if (wybor == 2) {
+                System.out.println("Podaj nazwę katalogową: ");
+                scan.useDelimiter("\n");
+                String nazwKat = scan.next();
+                Gwiazda gwiazda = SprawdzGwiazde(nazwKat);
+                if (gwiazda == null) {
+                    System.out.println("Sory nie ma takiej");
+                    break;
+                }
+                Gwiazdozbior gwz = SprawdzObiekt(gwiazda.gwiazdozbior);
+                if (gwz != null) {
+                    gwz.UsunGwiazde(gwiazda);
+                }
+            }
+            if (wybor == 3) {
+                System.out.println("""
+                        1 - Wyświetl wszystko
+                        2 - Wyświetl supernove
+                        3 - Wyświetl gwiazdy na danej półkuli
+                        4 - Wyświetl gwiazdy w zadanym przedziale Wielkości Gwiazdowej
+                        5 - Wyświetl po Nazwie Katalogowej
+                        6 - Wyświetl gwiazdy w zadanej odległości (parseki)
+                        7 - Wyświetl gwiazdy w zadanej temperaturze
+                        8 - Wyświetl gwiazdy danego gwiazdozbioru""");
+                int wyswietl_wybor = scan.nextInt();
+                switch (wyswietl_wybor) {
+                    case 1:
+                        //wyświetlanie wszystkich gwiazd
+                        for (Gwiazdozbior gwiazdozbior1: listaOdczyt) {
+                            System.out.println(gwiazdozbior1.nazwa);
+                            for (Gwiazda gwiazda: gwiazdozbior1.gwiazdozbior) {
+                                gwiazda.Poka();
+                                System.out.println();
+                            }
+                        }
+                        break;
+                    case 2:
+                        WyszukajSupernove();
+                        break;
+                    case 3:
+                        System.out.println("W jakiej półkuli?");
+                        String polkula = scan.next();
+                        WyszukajPolkule(polkula);
+                        break;
+                    case 4:
+                        System.out.println("Podaj początek:");
+                        double pocz = scan.nextDouble();
+                        System.out.println("Podaj koniec:");
+                        double koniec = scan.nextDouble();
+                        WyszukajWielkoscGwiazdowa(pocz, koniec);
+                        break;
+                    case 5:
+                        System.out.println("Podaj nazwę katalogową:");
+                        scan.useDelimiter("\n");
+                        String nK = scan.next();
+                        WyszukajNazwaKatalogowa(nK);
+                        break;
+                    case 6:
+                        System.out.println("Podaj wartość:");
+                        double poczPar = scan.nextDouble();
+                        WyszukajParseki(poczPar);
+                        break;
+                    case 7:
+                        System.out.println("Podaj początek przedziału:");
+                        BigDecimal p = scan.nextBigDecimal();
+                        System.out.println("Podaj koniec przedziału:");
+                        BigDecimal k = scan.nextBigDecimal();
+                        WyszukajTemperature(p, k);
+                        break;
+                    case 8:
+                        System.out.println("Podaj nazwę Gwiazdozbioru");
+                        String nazwa_gwz = scan.next();
+                        WyszukajWGwiazdozbiorze(nazwa_gwz);
+                        break;
+                    default:
+                        System.out.println("Niepoprawny numer");
+                }
+            }
+            Zapis(listaOdczyt);
         }
-//        WyszukajSupernove();
-//        WyszukajPolkule("PN");
-//        WyszukajWielkoscGwiazdowa(8.50,10);
-
-
     }
-
 }
