@@ -1,4 +1,5 @@
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.DoubleSummaryStatistics;
 import java.util.Objects;
@@ -84,6 +85,87 @@ public class Main
             }
         }
     }
+    static void WyszukajNazwaKatalogowa(String inputNazwy)      //Jakub Czekajski
+    {
+        for (Gwiazdozbior gwiazdozbior: listaOdczyt) {
+            for (Gwiazda gwiazda: gwiazdozbior.gwiazdozbior) {
+                if (Objects.equals(gwiazda.getNazwaKatalogowa(), inputNazwy))
+                {
+                    gwiazda.Poka();
+                    System.out.println();
+                }
+            }
+        }
+    }
+    static void WyszukajParseki (double parsek)         //Jakub Czekajski
+    {
+        double lataSwietlne=parsek*0.30661012859534;
+//        List <Double> najmniejszaRoznica = new ArrayList<Double>();
+//        List <Double> lataSwietlneLista=new ArrayList<Double>();
+        double minRoznica = Double.MAX_VALUE;
+        Gwiazda najblizszaGwiazda = null;
+//        String gotowe=null;
+        for (Gwiazdozbior gwiazdozbior: listaOdczyt) {
+            for (Gwiazda gwiazda: gwiazdozbior.gwiazdozbior) {
+//                double roznica = Math.abs(gwiazda.lataSwietlne - parsek);
+                if (lataSwietlne==gwiazda.lataSwietlne) {
+                    gwiazda.Poka();
+                    System.out.println();
+//                    gotowe="gotowe";
+                }
+                else
+                {
+                    double roznica = Math.abs(gwiazda.lataSwietlne - parsek);
+                    if (roznica < minRoznica) {
+                        minRoznica = roznica;
+                        najblizszaGwiazda = gwiazda;
+                    }
+//                    najmniejszaRoznica.add(roznica);
+//                    lataSwietlneLista.add(lataSwietlne);
+                }
+            }
+        }
+        if (najblizszaGwiazda != null) {
+            System.out.println("\033[31mNie znaleziono gwiazdy w takiej odległości\033[0m, najbliższa gwiazda to: ");
+            najblizszaGwiazda.Poka();
+        }
+//        double pomoc;
+//        int indexListy;
+//        if (gotowe ==null)
+//        {
+//            pomoc=Collections.min(najmniejszaRoznica);
+//            indexListy=najmniejszaRoznica.indexOf(pomoc);
+//
+//            for (Gwiazdozbior gwiazdozbior: listaOdczyt) {
+//                for (Gwiazda gwiazda: gwiazdozbior.gwiazdozbior) {
+//                    if (gwiazda.lataSwietlne==lataSwietlneLista.get(indexListy))
+//                    {
+//                        System.out.println("Najbliższa gwiazda to:");
+//                        gwiazda.Poka();
+//                        System.out.println();
+//                    }
+//                }
+//            }
+//        }
+
+    }
+    public static void WyszukajTemperature(BigDecimal temp1, BigDecimal temp2)
+    {
+        int wart1;
+        int wart2;
+        for (Gwiazdozbior gwiazdozbior: listaOdczyt) {
+            for (Gwiazda gwiazda: gwiazdozbior.gwiazdozbior) {
+                BigDecimal wartoscTemp=new BigDecimal(gwiazda.temperatura);
+                wart1=wartoscTemp.compareTo(temp1);
+                wart2=wartoscTemp.compareTo(temp2);
+                if (wart1>0 && wart2<0)
+                {
+                    gwiazda.Poka();
+                    System.out.println();
+                }
+            }
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         Scanner scan = new Scanner(System.in);
@@ -105,17 +187,6 @@ public class Main
 //        WyszukajWielkoscGwiazdowa(8.50,10);
 
 
-//            System.out.println("Dodawanie gwiazdy");
-//            String nazwa = scan.nextLine();
-//            String deklinacja = scan.nextLine();
-//            String rekta = scan.nextLine();
-//            double obsWiel = scan.nextDouble();
-//            double lata = scan.nextDouble();
-//            String gwiazdozbior = scan.nextLine();
-//            double masa = scan.nextDouble();
-//            String temperatura = scan.nextLine();
-//            Gwiazda gw = new Gwiazda(nazwa, deklinacja, rekta, obsWiel, lata, gwiazdozbior, masa, temperatura);
-//            wolarz.DodajGwiazde(gw);
     }
 
 }

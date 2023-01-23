@@ -135,7 +135,6 @@ public class Gwiazda implements Serializable
     public Gwiazda(String nazwa, String deklinacja, String rektascenjsa, double obsWielkosc,
                    double odleglosc, String gwiazdozbior, double masa, String temperatura){   //Maciej Gajda
         this.nazwa = nazwa;
-//        this.nazwaKatalogowa =
         this.deklinacja = deklinacja;
         this.rektascenjsa = rektascenjsa;
         this.obserwowanaWielkoscGwiazdy = obsWielkosc;
