@@ -92,14 +92,14 @@ public class Main
 //        List <Double> lataSwietlneLista=new ArrayList<Double>();
         double minRoznica = Double.MAX_VALUE;
         Gwiazda najblizszaGwiazda = null;
-//        String gotowe=null;
+        String gotowe=null;
         for (Gwiazdozbior gwiazdozbior: listaOdczyt) {
             for (Gwiazda gwiazda: gwiazdozbior.gwiazdozbior) {
 //                double roznica = Math.abs(gwiazda.lataSwietlne - parsek);
                 if (lataSwietlne==gwiazda.lataSwietlne) {
                     gwiazda.Poka();
                     System.out.println();
-//                    gotowe="gotowe";
+                    gotowe="gotowe";
                 }
                 else
                 {
@@ -114,7 +114,7 @@ public class Main
             }
         }
 
-        if (najblizszaGwiazda != null) {
+        if (najblizszaGwiazda != null && gotowe == null) {
             System.out.println("\033[31mNie znaleziono gwiazdy w takiej odległości\033[0m, najbliższa gwiazda to: ");
             najblizszaGwiazda.Poka();
         }
@@ -168,7 +168,7 @@ public class Main
         }
     }
 
-    public static Gwiazdozbior SprawdzObiekt(String nazwa) {
+    public static Gwiazdozbior SprawdzObiekt(String nazwa) {    //Maciej Gajda
         for (Gwiazdozbior g : listaOdczyt) {
             if (Objects.equals(nazwa, g.nazwa))
                 return g;
@@ -176,7 +176,7 @@ public class Main
         return null;
     }
 
-    public static Gwiazda SprawdzGwiazde(String nazwaKat) {
+    public static Gwiazda SprawdzGwiazde(String nazwaKat) {     //Maciej Gajda
         for (Gwiazdozbior g : listaOdczyt) {
             for (Gwiazda gwiazda : g.gwiazdozbior) {
                 System.out.println(nazwaKat);
@@ -218,6 +218,7 @@ public class Main
                 System.out.println("Podaj odległość w latach świetlnych");
                 lata = scan.nextDouble();
                 System.out.println("Podaj nazwę gwiazdozbioru");
+                scan.useDelimiter("\n");
                 gwiazdozbior = scan.next();
                 System.out.println("Podaj masę");
                 masa = scan.nextDouble();

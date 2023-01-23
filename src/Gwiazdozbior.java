@@ -12,16 +12,16 @@ public class Gwiazdozbior implements Serializable
         this.nazwa = nazwa;
         this.gwiazdozbior = new ArrayList<>();
     }
-    public void UsunGwiazde(Gwiazda gwiazda) {
+    public void UsunGwiazde(Gwiazda gwiazda) {   //Jakub Czekajski
         this.gwiazdozbior.remove(gwiazda);
         ustawNazwe();
     }
-    public void DodajGwiazde(Gwiazda gwiazda)
+    public void DodajGwiazde(Gwiazda gwiazda)   //Jakub Czekajski
     {
         this.gwiazdozbior.add(gwiazda);
         ustawNazwe();
     }
-    public void ustawNazwe() {
+    public void ustawNazwe() {  //Maciej Gajda
         for (int i = 0; i < this.gwiazdozbior.size(); i++) {
             this.gwiazdozbior.get(i).setNazwaKatalogowa(literyGreckie[i] + " " + this.nazwa);
         }
