@@ -31,12 +31,6 @@ public class Gwiazda implements Serializable
     public String getPolkula() {
         return polkula;
     }
-    public String getRektascenjsa() {
-        return rektascenjsa;
-    }
-    public String getDeklinacja() {
-        return deklinacja;
-    }
     public double getObserwowanaWielkoscGwiazdy() {
         return obserwowanaWielkoscGwiazdy;
     }
@@ -60,7 +54,7 @@ public class Gwiazda implements Serializable
     {
         if (nazwa.length() != 7&& !CzyPoprawnaNazwa(nazwa))
         {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Niepoprawna nazwa");
         }
         else
             this.nazwa=nazwa;
@@ -69,27 +63,15 @@ public class Gwiazda implements Serializable
     {
         this.nazwaKatalogowa=nazwaKatalogowa;
     }
-    public void setGwiazdozbior(String gwiazdozbior)
-    {
-        this.gwiazdozbior=gwiazdozbior;
-    }
     public void setPolkula(String polkula)
     {
         this.polkula=polkula;
     }
-    public void setRektascenjsa(String rektascenjsa)
-    {
-        this.rektascenjsa=rektascenjsa;
-    }
-    public void setDeklinacja(String deklinacja)
-    {
-        this.deklinacja=deklinacja;
-    }
-    public void setObserwowanaWielkoscGwiazdy(int obserwowanaWielkoscGwiazdy)
+    public void setObserwowanaWielkoscGwiazdy(double obserwowanaWielkoscGwiazdy)
     {
         if (obserwowanaWielkoscGwiazdy<-26.74 || obserwowanaWielkoscGwiazdy>15.00)
         {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Zła wartość obserwowanej Wielkości Gwiazdowej");
         }
         else {
             this.obserwowanaWielkoscGwiazdy = obserwowanaWielkoscGwiazdy;
@@ -103,7 +85,7 @@ public class Gwiazda implements Serializable
     {
         if (lataSwietlne<=0)
         {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Lata świetlne nie mogą być mniejsze od 0");
         }
         else
         {
@@ -114,7 +96,7 @@ public class Gwiazda implements Serializable
     {
         if (Double.parseDouble(temperatura)<2000)
         {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Zbyt mała temperatura");
         }
         else {
             this.temperatura = temperatura;
@@ -123,7 +105,7 @@ public class Gwiazda implements Serializable
     public void setMasa(double masa) {
         if (masa<=0.1||masa>50)
         {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Zła masa");
         }
         else
         {
@@ -134,17 +116,20 @@ public class Gwiazda implements Serializable
     //konstruktor
     public Gwiazda(String nazwa, String deklinacja, String rektascenjsa, double obsWielkosc,
                    double odleglosc, String gwiazdozbior, double masa, String temperatura){   //Maciej Gajda
-        this.nazwa = nazwa;
-        this.deklinacja = deklinacja;
-        this.rektascenjsa = rektascenjsa;
-        this.obserwowanaWielkoscGwiazdy = obsWielkosc;
-        this.lataSwietlne = odleglosc;
-        this.absolutnaWielkoscGwiazdy = ObliczAbsWielGwi();
-        this.polkula = JakaPolkula();
-        this.gwiazdozbior = gwiazdozbior;
-        this.masa = masa;
-        this.temperatura = temperatura;
-
+        try {
+            this.setNazwa(nazwa);
+            this.deklinacja = deklinacja;
+            this.rektascenjsa = rektascenjsa;
+            this.setObserwowanaWielkoscGwiazdy(obsWielkosc);
+            this.setLataSwietlne(odleglosc);
+            this.absolutnaWielkoscGwiazdy = ObliczAbsWielGwi();
+            this.polkula = JakaPolkula();
+            this.gwiazdozbior = gwiazdozbior;
+            this.setMasa(masa);
+            this.setTemperatura(temperatura);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Wystąpił problem: " + e.getMessage());
+        }
     }
     public boolean CzyPoprawnaNazwa(String nazwa) //Jakub Czekajski
     {

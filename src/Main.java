@@ -27,12 +27,14 @@ public class Main
                 pomoc.add(g);
 //                System.out.println(g.gwiazdozbior);
             }
+            System.out.println("\033[32mPlik odczytano pomyślnie\033[0m");
             return pomoc;
         } catch (IOException e) {
             if (e instanceof java.io.EOFException) {
                 System.out.println("Koniec pliku");
             } else {
-                e.printStackTrace();
+//                e.printStackTrace();
+                System.out.println("\033[31mNie ma takiego pliku, dodaj gwiazdę w celu utworzenia pliku\033[0m");
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -190,13 +192,13 @@ public class Main
 
     public static void main(String[] args) throws IOException {
         Scanner scan = new Scanner(System.in);
-        for (Gwiazdozbior gwiazdozbior: listaOdczyt) {
-            System.out.println(gwiazdozbior.nazwa);
-            for (Gwiazda gwiazda: gwiazdozbior.gwiazdozbior) {
-                gwiazda.Poka();
-                System.out.println();
-            }
-        }
+//        for (Gwiazdozbior gwiazdozbior: listaOdczyt) {
+//            System.out.println(gwiazdozbior.nazwa);
+//            for (Gwiazda gwiazda: gwiazdozbior.gwiazdozbior) {
+//                gwiazda.Poka();
+//                System.out.println();
+//            }
+//        }
 
         System.out.println("Ewidencja Gwiazd");
         int wybor = 5;
@@ -226,6 +228,7 @@ public class Main
                 temperatura = scan.next();
 
                 Gwiazda gw = new Gwiazda(nazwa, deklinacja, rekta, obsWiel, lata, gwiazdozbior, masa, temperatura);
+                gw.setNazwa(nazwa);
                 Gwiazdozbior gwz = SprawdzObiekt(gwiazdozbior);
                 if (gwz == null) {
                     gwz = new Gwiazdozbior((gwiazdozbior));
