@@ -11,7 +11,7 @@ public class Main
     public static List<Gwiazdozbior> listaOdczyt = Odczyt();
 //    public static List<Gwiazdozbior> listaOdczyt = new ArrayList<>();
     public static void Zapis(List<Gwiazdozbior> gz1) throws IOException {
-        FileOutputStream fos = new FileOutputStream("baza.dat");
+        FileOutputStream fos = new FileOutputStream("baza.txt");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
 
         oos.writeObject(gz1);
@@ -20,7 +20,7 @@ public class Main
     }
     public static List<Gwiazdozbior> Odczyt() {
         List<Gwiazdozbior> pomoc = new ArrayList<>();
-        try (FileInputStream fis = new FileInputStream("baza.dat");
+        try (FileInputStream fis = new FileInputStream("baza.txt");
              ObjectInputStream ois = new ObjectInputStream(fis)) {
             ArrayList<Gwiazdozbior> tempList = (ArrayList<Gwiazdozbior>)ois.readObject();
             for(Gwiazdozbior g: tempList) {
